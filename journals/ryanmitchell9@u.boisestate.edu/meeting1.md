@@ -1,16 +1,11 @@
 # Meeting 1
 
-- Attendance: John absent
+- Attendance: All attended
 
-John Doe skipped out on the meeting because he said it was international underwater basket weavers
-day and he had to attend a mandatory safety briefing to keep his basket weaving license. According to
-John, underwater basket weaving accidents are the number one cause of death for people between
-the ages of 19 and 21.5 years old so if he missed the meeting it could literally kill him!!
-
-The rest of the team and I finished selecting the operating systems that we want to research
-and stubbed out all the sections on the paper
+We all were able to attend this week and last. During this time we completed the Setup Lab. So we all accepted the Github Classroom assignment, added the contributers, added an MIT license to the project, and worked together to complete the team contract. In addition, we also created the folders for our journals and began work on those. Lastly, we discussed what we need to do next regarding this project.
 
 My task for this week:
 
-- Get the Latex file all updated with our names
-- Stub out my sections
+- Review project ideas from class
+- Come up with at least two suitable project ideas
+- Work with team to decide on the best project idea
