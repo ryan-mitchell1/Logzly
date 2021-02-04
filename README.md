@@ -27,6 +27,13 @@ Each journal entry will be time stamped for the team manager to see when the dev
 ### Sample Use Case
 A sample use case for this application is this project. Every week we must submit a journal entry to the Github repository. But this system is not the easiest process for the student or the teacher because the professor must dig through all the repositories in order to view the entries. So this application will provide an easy way for team members and the professor to view journal entries. And it will provide a better way to add entries instead of having to commit to the repository.
 
+## Feedback from Shane
+
+HA!! What a great project :) I could really use something like this. I can see so many applications outside of software development or the academic environment. For example, I can see this as a great way to do yearly employee evaluations. The employee would use this app during the year and the evaluation would be the employee and manager sitting down and reviewing the journal entries.  
+
+I am excited to see the finished project and with your teams permission use it in my classes!
+
+
 ## Tech lab
 
 TODO:[Tech Lab](https://shanep.github.io/capstone/labs/tech/)
