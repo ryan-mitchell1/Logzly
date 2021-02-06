@@ -36,7 +36,12 @@ I am excited to see the finished project and with your teams permission use it i
 
 ## Tech lab
 
-TODO:[Tech Lab](https://shanep.github.io/capstone/labs/tech/)
+For this project, we discussed that we will need both a frontend and backend, and with this will need both backend and frontend languages and frameworks. To start we discussed frontend frameworks and we quickly decided that we wanted to stick with one of the main three; Vue.js, Angular.js, and React.js. This is because these three frameworks have the most support and documentation available.  From these three we decided to go with React. This is because our combined experience with React outweighs either of the other two and we all still want to learn more about it. In addition, after some research, we found React to be very fast, scalable, and somewhat simple to use/learn. React and Angular also have some of the highest value right now in the job market, and in recent years React and Vue have been competing for the most popular framework.
+
+Then we discussed backend frameworks and decided to go with nodeJS because we wanted to choose an all-javascript solution using the same package manager. Our research also concluded that nodeJS is fast because it uses the V8 engine developed for chrome which compiles javascript code into native machine code directly, thus increasing the speed and efficient execution of the code. Once decided on nodeJS we had to start looking into web frameworks for nodeJS and we decided on Express. We decided to use Express because it was easy to configure and customize. Using express would allow us to conveniently serve static files and resources from our application. 
+
+Lastly, we also discussed a little bit about what databases we should use. Our first consideration was Firebase because we are considering using this for our authentication as well through GitHub. We also are considering a SQL database such as MySQL or PostgreSQL. We are still weighing the pros and cons of both of these options and are intending to have the decision made when we start developing our project.
+
 
 ## Planning Lab
 
