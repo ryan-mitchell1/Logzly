@@ -1,2 +1,4 @@
 #!/bin/bash
-exit 127
+find . -name "*.lock" -type f -delete
+
+rm -rf src/node_modules && rm -rf src/server/node_modules
