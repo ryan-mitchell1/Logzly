@@ -1,2 +1,4 @@
 #!/bin/bash
-exit 127
+yarn --cwd "src" install && yarn --cwd "src/server" install
+
+exit 0
