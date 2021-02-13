@@ -1,6 +1,6 @@
 #!/bin/bash
 find . -name "*.lock" -type f -delete
 
-rm -rf src/node_modules && rm -rf src/server/node_modules
+find . -name node_modules -type d -exec rm -rf {} +
 
 exit 0
