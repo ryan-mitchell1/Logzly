@@ -1,2 +1,4 @@
 #!/bin/bash
-exit 127
+yarn --cwd "src/server/tests" test
+
+exit 0
