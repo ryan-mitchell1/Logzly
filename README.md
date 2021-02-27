@@ -1,6 +1,6 @@
 # CS481 - Senior Design Project
 
-TODO:[CI Lab](https://shanep.github.io/capstone/labs/ci/)
+[![CI Actions Status](https://github.com/shanep-capstone/cs481-s21-team_10/actions/workflows/node.js.yml/badge.svg)](https://github.com/shanep-capstone/cs481-s21-team_10/actions)
 
 ## Project Epic
 
