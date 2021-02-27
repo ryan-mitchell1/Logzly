@@ -42,6 +42,11 @@ Then we discussed backend frameworks and decided to go with nodeJS because we wa
 
 Lastly, we also discussed a little bit about what databases we should use. Our first consideration was Firebase because we are considering using this for our authentication as well through GitHub. We also are considering a SQL database such as MySQL or PostgreSQL. We are still weighing the pros and cons of both of these options and are intending to have the decision made when we start developing our project.
 
+## CI lab
+
+To start with setting up the continuous integration of our application we clicked on the actions tab at the top of the GitHub page of our repo. From here we were able to click on the example [Node.js workflow](https://docs.github.com/en/actions/guides/building-and-testing-nodejs) and make our changes in there. We changed this file to run the action on each push, delete the default run commands, and added our own run commands that executed our test.sh and build.sh scripts. In addition, we added names before running each of these files in order to precisely log what is happening. After completing these steps we had our action set up to build and test our project on every commit. Lastly, to get the [status badge](https://docs.github.com/en/actions/managing-workflow-runs/adding-a-workflow-status-badge) to appear in our README, we just had to add a link to the status badge in our README.
+
+This CI pipeline currently uses an Ubuntu test runner to test our project against Node.js versions 10.x, 12.x, 14.x, and 15.x.
 
 ## Planning Lab
 
