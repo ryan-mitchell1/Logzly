@@ -52,6 +52,6 @@ This CI pipeline currently uses an Ubuntu test runner to test our project agains
 
 TODO:[Planning Lab](https://shanep.github.io/capstone/labs/planning/)
 
-- [Jane's Plan](planning/janedoe@u.boisestate.edu.md)
+- [Ryan's Plan](https://github.com/shanep-capstone/cs481-s21-team_10/blob/master/planning/ryanmitchell9%40u.boisestate.edu.md)
 - John's Plan
 - Bob's Plan
