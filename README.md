@@ -54,4 +54,4 @@ TODO:[Planning Lab](https://shanep.github.io/capstone/labs/planning/)
 
 - [Ryan's Plan](https://github.com/shanep-capstone/cs481-s21-team_10/blob/master/planning/ryanmitchell9%40u.boisestate.edu.md)
 - [Nikesh's Plan](./planning/nikeshparajuli@u.boisestate.edu.md)
-- Bob's Plan
+- [Antonio's Plan](./planning/antoniotelleria@u.boisestate.edu.md)
