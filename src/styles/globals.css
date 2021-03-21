@@ -1,0 +1,23 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.nav-div {
+  justify-content: space-between;
+  padding: 10px 10px;
+  align-items: center;
+}
+
+.icon-div {
+  align-items: flex-end;
+}
