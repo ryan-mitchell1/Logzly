@@ -1,2 +1,3 @@
 #!/bin/bash
-yarn --cwd "src" install && yarn --cwd "src/server" install
+yarn --cwd "src"
+yarn --cwd "src" build

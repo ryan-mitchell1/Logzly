@@ -1,2 +1,2 @@
 #!/bin/bash
-yarn --cwd "src/server/tests" test
+yarn --cwd "src" test
