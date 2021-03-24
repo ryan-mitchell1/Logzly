@@ -9,7 +9,7 @@ export default function AppNav(props) {
         <div className="flex flex-row nav-div">
             <div className="flex flex-row icon-div">
                 <Link href="/">
-                    <a><Image src="/appicon.svg" height="40" width="40" className="logo" /></a>
+                    <a><Image src="/appicon.svg" height="40" width="40" className="logo" priority /></a>
                 </Link>
                 <Typography variant="h5" className="app-name" style={{ fontFamily: 'Courier' }}>Logzly</Typography>
             </div>

@@ -34,3 +34,10 @@ body {
   transform: translate(-50%, -50%);
   text-align: center;
 }
+
+.app-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
