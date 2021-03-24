@@ -53,3 +53,6 @@ This CI pipeline currently uses an Ubuntu test runner to test our project agains
 - [Ryan's Plan](./planning/ryanmitchell9@u.boisestate.edu.md)
 - [Nikesh's Plan](./planning/nikeshparajuli@u.boisestate.edu.md)
 - [Antonio's Plan](./planning/antoniotelleria@u.boisestate.edu.md)
+
+## Sponsors
+![powered-by-vercel](https://user-images.githubusercontent.com/47830777/112386760-fa86b200-8cb6-11eb-950e-721436bc9031.png)
