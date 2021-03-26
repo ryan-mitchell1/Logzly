@@ -55,4 +55,4 @@ This CI pipeline currently uses an Ubuntu test runner to test our project agains
 - [Antonio's Plan](./planning/antoniotelleria@u.boisestate.edu.md)
 
 ## Sponsors
-![powered-by-vercel](https://user-images.githubusercontent.com/47830777/112386760-fa86b200-8cb6-11eb-950e-721436bc9031.png)
+[![powered-by-vercel](https://user-images.githubusercontent.com/47830777/112386760-fa86b200-8cb6-11eb-950e-721436bc9031.png)](https://vercel.com/?utm_source=logzly&utm_campaign=oss)
