@@ -1,7 +1,7 @@
 import { Button, Typography } from '@material-ui/core'
-import AppNav from '../components/app-nav'
-import AppBackground from '../components/app-background'
-import AppFooter from '../components/app-footer'
+import AppNav from '@/components/app-nav'
+import AppBackground from '@/components/app-background'
+import AppFooter from '@/components/app-footer'
 
 export default function Home() {
   return (

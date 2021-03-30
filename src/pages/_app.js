@@ -1,23 +1,13 @@
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
-import '../styles/globals.css'
-import AppHead from '../components/app-head'
-
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#115293',
-    },
-    secondary: {
-      main: '#801313',
-    },
-  },
-})
+import { ThemeProvider } from '@material-ui/core/styles'
+import '@/styles/globals.css'
+import AppHead from '@/components/app-head'
+import customTheme from '@/styles/theme'
 
 function MyApp({ Component, pageProps }) {
   return (
     <div>
       <AppHead />
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={customTheme}>
         <Component {...pageProps} />
       </ThemeProvider>
     </div>

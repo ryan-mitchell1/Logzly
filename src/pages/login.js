@@ -1,8 +1,8 @@
 import { Button, Typography } from "@material-ui/core"
 import GitHubIcon from '@material-ui/icons/GitHub'
-import AppBackground from "../components/app-background"
-import AppFooter from "../components/app-footer"
-import AppNav from "../components/app-nav"
+import AppBackground from "@/components/app-background"
+import AppFooter from "@/components/app-footer"
+import AppNav from "@/components/app-nav"
 
 export default function Login() {
     return (
