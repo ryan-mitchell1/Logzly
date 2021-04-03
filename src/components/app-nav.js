@@ -13,7 +13,7 @@ export default function AppNav(props) {
                 </Link>
                 <Typography variant="h5" className="app-name" style={{ fontFamily: 'Courier' }}>Logzly</Typography>
             </div>
-            {displayLoginButton && <Button variant="contained" color="primary" className="home-login-button" href="login">Login</Button>}
+            {displayLoginButton && <Link href="login"><Button variant="contained" color="primary" className="home-login-button">Login</Button></Link>}
         </div>
     )
 }
