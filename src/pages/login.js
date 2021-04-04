@@ -8,8 +8,7 @@ export default function Login() {
     return (
         <div>
             <AppBackground />
-            <AppNav displayLoginButton={false} />
-
+            <AppNav buttonName="Home" buttonHref="/" />
             <div className="center-content">
                 <Typography variant="h2" style={{ fontSize: '7vh', fontFamily: 'Courier', padding: '2vh 2vh' }}>Log in to Logzly</Typography>
                 <Button variant="contained" style={{ background: '#24292e', color: 'white' }} startIcon={<GitHubIcon />}>Login With GitHub</Button>

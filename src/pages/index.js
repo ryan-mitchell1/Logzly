@@ -8,13 +8,13 @@ export default function Home() {
   return (
     <div>
       <AppBackground />
-      <AppNav displayLoginButton={true} />
-
+      <AppNav buttonName="Login" buttonHref="login" />
       <div className="center-content">
         <Typography variant="h2" style={{ fontSize: '7vh', fontFamily: 'Courier', padding: '2vh 2vh' }}>A journaling app for developers.</Typography>
-        <Link href="login"><Button variant="contained" color="secondary" >Get Started</Button></Link>
+        <Link href="login">
+          <Button variant="contained" color="secondary">Get Started</Button>
+        </Link>
       </div>
-
       <AppFooter />
     </div>
   )

@@ -3,7 +3,8 @@ import Link from 'next/link'
 import { Button, Typography } from '@material-ui/core'
 
 export default function AppNav(props) {
-    const displayLoginButton = props.displayLoginButton
+    const buttonName = props.buttonName
+    const buttonHref = props.buttonHref
 
     return (
         <div className="flex flex-row nav-div">
@@ -13,7 +14,9 @@ export default function AppNav(props) {
                 </Link>
                 <Typography variant="h5" className="app-name" style={{ fontFamily: 'Courier' }}>Logzly</Typography>
             </div>
-            {displayLoginButton && <Link href="login"><Button variant="contained" color="primary" className="home-login-button">Login</Button></Link>}
+            <Link href={buttonHref}>
+                <Button variant="contained" color="primary" className="login-home-button">{buttonName}</Button>
+            </Link>
         </div>
     )
 }
