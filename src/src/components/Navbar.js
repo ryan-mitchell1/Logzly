@@ -50,6 +50,11 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor:`#3f51b5`,
         color:'white'
     },
+    infoDiv: {
+      marginTop: `3%`,
+      fontSize:12.5,
+      opacity:0.7
+    },
     offset: theme.mixins.toolbar
 }));
 
@@ -59,8 +64,9 @@ export default function Navbar() {
   const [modalStyle] = React.useState(getModalStyle);
   const [openJoin, setOpenJoin] = React.useState(false);
   const [openCreate, setOpenCreate] = React.useState(false);
-  const [email, setEmail] = useState('');
+  const [groupName, setGroupName] = useState('');
   const [password, setPassword] = useState('');
+  const [groupTitle, setGroupTitle] = useState('');
 
   const handleOpenJoin = () => {
     setOpenJoin(true);
@@ -86,15 +92,19 @@ export default function Navbar() {
     setOpenCreate(false);
   };
 
+  const signOut = () => {
+    window.location.href = "/";
+  }
+
   const joinBody = (
     <div style={modalStyle} className={classes.modal}>
-    <h2 id="simple-modal-title" style={{textAlign:"center"}}>Join a Group</h2>
+    <h2 id="simple-modal-title" style={{textAlign:"center", fontFamily:"'Roboto', 'Helvetica', 'Arial', sans-serif"}}>Join a Group</h2>
         <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmitJoin}>
             <TextField 
                 id="group-name" 
                 label="Group Name" 
                 variant="outlined" 
-                onInput={ e=>setEmail(e.target.value)} 
+                onInput={ e=>setGroupName(e.target.value)} 
                 fullWidth={true}
             />
             <Typography className={classes.divider} style={{marginBottom:`8%`}}/>
@@ -118,13 +128,21 @@ export default function Navbar() {
 
   const createBody = (
     <div style={modalStyle} className={classes.modal}>
-    <h2 id="simple-modal-title" style={{textAlign:"center"}}>Create a Group</h2>
+    <h2 id="simple-modal-title" style={{textAlign:"center", fontFamily:"'Roboto', 'Helvetica', 'Arial', sans-serif"}}>Create a Group</h2>
         <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmitCreate}>
             <TextField 
                 id="group-name" 
                 label="Group Name" 
                 variant="outlined" 
-                onInput={ e=>setEmail(e.target.value)} 
+                onInput={ e=>setGroupName(e.target.value)} 
+                fullWidth={true}
+            />
+            <Typography className={classes.divider} style={{marginBottom:`8%`}}/>
+            <TextField 
+                id="group-title" 
+                label="Group Title" 
+                variant="outlined" 
+                onInput={ e=>setGroupTitle(e.target.value)} 
                 fullWidth={true}
             />
             <Typography className={classes.divider} style={{marginBottom:`8%`}}/>
@@ -143,6 +161,7 @@ export default function Navbar() {
                 Create Group
             </Button>
         </form>
+        <div className={classes.infoDiv}>Invite people to this group by sending them the 'Group Name' and 'Password'!</div>
     </div>
   );
 
@@ -161,8 +180,8 @@ export default function Navbar() {
           <Button type="button" color="inherit" className={classes.button} onClick={handleOpenCreate}>
             Create Group
           </Button>
-          <Button color="inherit" className={classes.button} onClick={() => setExample("secondary")}>
-            <Link style={{color:'white', textDecoration: 'none' }} to="/">Sign Out</Link>
+          <Button color="inherit" className={classes.button} onClick={signOut}>
+            Sign Out
           </Button>
         </Toolbar>
         <Modal
