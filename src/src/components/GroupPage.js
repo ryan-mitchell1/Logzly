@@ -1,5 +1,4 @@
 import React from "react";
-import "../styles.css";
 import Navbar from './Navbar';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
@@ -11,6 +10,9 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
+import { useAuth } from "../lib/auth";
+import { Redirect } from "react-router";
+import { Link } from "react-router-dom";
 
 const tableStyle = { width: '75% !important' };
 
@@ -27,14 +29,15 @@ function OptionButton(props) {
 
 const useStyles = makeStyles({
     table: {
-      width: '75%',
-      marginLeft: '12.5%',
+        width: '75%',
+        marginLeft: '12.5%',
     },
     buttonStyle: {
-        background:'#70B657'
+        background: '#70B657'
     },
-  });
+});
 export default function GroupPage() {
+    const auth = useAuth();
     const classes = useStyles();
     var group_data = [
         {
@@ -63,20 +66,17 @@ export default function GroupPage() {
         }
     ];
 
-    const rowClick = groupId => {
-        window.location.href = "/logs?group-id=" + groupId;
-    };
-    return (
+    return auth.user ? (
         <div>
             <Navbar />
             <TableContainer component={Paper} className={classes.table}>
-                <Table  aria-label="simple table">
+                <Table aria-label="simple table">
                     <TableHead>
                         <TableRow>
                             <TableCell>Group Name</TableCell>
                             <TableCell align="right">Group Title</TableCell>
-                            <TableCell align="right">Last Updated</TableCell>
-                            <TableCell align="right">Leave/Delete</TableCell>
+                            <TableCell align="center">Last Updated</TableCell>
+                            <TableCell align="center">Leave/Delete</TableCell>
                             <TableCell align="center">Logs</TableCell>
                         </TableRow>
                     </TableHead>
@@ -87,14 +87,21 @@ export default function GroupPage() {
                                     {row.groupName}
                                 </TableCell>
                                 <TableCell align="right">{row.groupTitle}</TableCell>
-                                <TableCell align="right">{row.lastUpdated}</TableCell>
-                                <TableCell align="center"><OptionButton admin={row.admin} groupId={row.groupId}/></TableCell>
-                                <TableCell align="center"><Button variant="contained" color="primary" size="small" onClick={() => rowClick(row.groupId)}>Go</Button></TableCell>
+                                <TableCell align="center">{row.lastUpdated}</TableCell>
+                                <TableCell align="center"><OptionButton admin={row.admin} groupId={row.groupId} /></TableCell>
+                                <TableCell align="center">
+                                    <Link to={"/logs/" + row.groupId} style={{ textDecoration: 'none' }}>
+                                        <Button variant="contained" color="primary" size="small">Go</Button>
+                                    </Link>
+
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
             </TableContainer>
         </div>
+    ) : (
+        <Redirect to="/login" />
     );
 }
