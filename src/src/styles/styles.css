@@ -1,0 +1,49 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+    font-size: 20px;
+}
+
+.app-background {
+    position:fixed;
+    bottom:0px;
+    z-index: -1;
+}
+
+.flex {
+  display: flex;
+}
+  
+.flex-row {
+  flex-direction: row;
+}
+
+.nav-div {
+  justify-content: space-between;
+  padding: 10px 10px;
+  align-items: center;
+}
+
+.icon-div {
+  align-items: flex-end;
+}
+
+.center-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.app-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
