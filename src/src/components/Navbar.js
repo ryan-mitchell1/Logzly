@@ -8,7 +8,7 @@ import green from "@material-ui/core/colors/green";
 import Modal from "@material-ui/core/Modal";
 import TextField from '@material-ui/core/TextField';
 import { useAuth } from "../lib/auth";
-import { createGroup } from '../lib/db'
+import { createGroup, joinGroup } from '../lib/db'
 
 
 function getModalStyle() {
@@ -72,6 +72,7 @@ export default function Navbar() {
   const [password, setPassword] = useState('');
   const [groupTitle, setGroupTitle] = useState('');
   const [errorCreate, setErrorCreate] = useState('');
+  const [errorJoin, setErrorJoin] = useState('');
 
   const handleOpenJoin = () => {
     setOpenJoin(true);
@@ -82,7 +83,27 @@ export default function Navbar() {
   };
 
   const handleSubmitJoin = () => {
-    setOpenJoin(false);
+    if(groupName == ""){
+      setErrorJoin('Group Name is required.')
+    } else if(password == ""){
+      setErrorJoin('Password is required.')
+    } else if(auth.user && password != "" && groupName != ""){
+      var results = joinGroup(auth.user.uid, groupName, password);
+      results.then( data => {
+        if(data == "wrong password"){
+          setErrorJoin('Password is incorrect.')
+        } 
+        if(data == "does not exist"){
+          setErrorJoin('This group does not exist.')
+        }
+        if(data == "already member"){
+          setErrorJoin('You are already a member of this group.')
+        }
+        if(data == "joined"){
+          window.location.reload();
+        }
+      })
+    }
   };
 
   const handleOpenCreate = () => {
@@ -141,10 +162,12 @@ export default function Navbar() {
           variant="contained"
           color="primary"
           className={classes.joinButton}
-          type="submit"
+          type="button"
+          onClick={() => handleSubmitJoin()}
         >
           Join Group
             </Button>
+            <div className={classes.errorText}>{errorJoin}</div>
       </form>
     </div>
   );

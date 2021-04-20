@@ -19,7 +19,7 @@ export function createGroup(uid, groupName, groupTitle, password) {
 
     const promise1 = new Promise((resolve, reject) => {
         groupNameCheck.then(data => {
-            if (data == true) {
+            if (data != false) {
                 resolve("taken");
             } else {
                 firestore.collection('groups').add({
@@ -31,8 +31,9 @@ export function createGroup(uid, groupName, groupTitle, password) {
                     "groupTitle": groupTitle,
                     "password": "" + md5(password),
                     "lastUpdated": getNow()
+                }).then(() => {
+                    resolve("created");
                 })
-                resolve("created");
             }
         })
     })
@@ -59,6 +60,59 @@ export async function getGroups(uid) {
     return promise1;
 }
 
+export function deleteGroup(groupId) {
+    const promise1 = new Promise((resolve, reject) => {
+        firestore.collection("groups").doc(groupId).delete().then(() => {
+            resolve("deleted");
+        })
+    })
+    return promise1;
+}
+
+export function leaveGroup(uid, group){
+    const promise1 = new Promise((resolve, reject) => {
+        const newMemeberList = group.groupMembers.filter(function (elem) { return elem !== uid; });
+        group.groupMembers = newMemeberList;
+        firestore.collection('groups').doc(group.id).update(group).then(() => {
+            resolve("joined");
+        })
+    })
+    return promise1;
+}
+
+export function joinGroup(uid, groupName, password) {
+    var groupNameCheck = checkGroupName(groupName);
+
+    const promise1 = new Promise((resolve, reject) => {
+        var index = 0;
+        groupNameCheck.then(data => {
+            if (data != false) {
+                if (data.password == "" + md5(password)) {
+                    data.groupMembers.forEach((memberId) => {
+                        ++index;
+                        if (memberId == uid) {
+                            resolve("already member");
+                            return;
+                        }
+                        if (index == data.groupMembers.length) {
+                            data.groupMembers.push(uid);
+                            firestore.collection('groups').doc(data.id).update(data).then(() => {
+                                resolve("joined");
+                            })
+                        }
+                    })
+                } else {
+                    resolve("wrong password");
+                }
+            } else {
+                resolve("does not exist");
+            }
+        })
+    })
+    return promise1;
+}
+
+
 async function checkGroupName(groupName) {
     const groups = await firestore.collection('groups');
 
@@ -68,15 +122,15 @@ async function checkGroupName(groupName) {
             querySnapshot.forEach((doc) => {
                 var group = { id: doc.id, ...doc.data() };
                 if (group.groupName == groupName) {
-                    resolve(true);
+                    resolve(group); //group with groupName does exist
                 }
             })
-            resolve(false)
+            resolve(false); //group with groupName does not exist
         })
     })
     return promise1;
 }
 
-function getNow(){
+function getNow() {
     return new Date().getTime();
 }

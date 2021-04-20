@@ -14,7 +14,7 @@ import { useAuth } from "../lib/auth";
 import { Redirect } from "react-router";
 import { Link } from "react-router-dom";
 import Modal from "@material-ui/core/Modal";
-import { getGroups } from '../lib/db'
+import { getGroups, deleteGroup, leaveGroup } from '../lib/db'
 
 const useStyles = makeStyles((theme) => ({
     table: {
@@ -44,7 +44,7 @@ export default function GroupPage() {
 
     const [groupData, setGroupData] = useState([]);
     const [showModal, setShowModal] = useState(false);
-    const [id, setId] = useState();
+    const [group, setGroup] = useState();
     const [type, setType] = useState();
 
     function body() {
@@ -56,14 +56,14 @@ export default function GroupPage() {
               style={{marginRight: '10%'}}
               variant="contained"
               color="primary"
-              onClick={() => leaveDelete(id, type)}
+              onClick={() => leaveDelete(group, type)}
             >
               {type}
                 </Button>
             <Button
             variant="contained"
             color="secondary"
-            onClick={() => leaveDelete(id, type)}
+            onClick={() => leaveDelete(group, type)}
         >
             Cancel
             </Button>
@@ -86,17 +86,25 @@ export default function GroupPage() {
         setShowModal(false);
     };
 
-    const confirm = (type, id) => {
+    const confirm = (type, group) => {
         setShowModal(true);
         setType(type);
-        setId(id);
+        setGroup(group);
     };
 
-    function leaveDelete(id, type) {
+    function leaveDelete(group, type) {
         if(type == 'delete'){
-
+           var response = deleteGroup(group.id);
+           response.then ((data) => {
+            window.location.reload();
+           })
         } else if(type == 'leave'){
-
+            if(auth.user){
+                var response = leaveGroup(auth.user.uid, group);
+                response.then ((data) => {
+                    window.location.reload();
+                })
+            }
         }
         setShowModal(false);
     }
@@ -113,13 +121,12 @@ export default function GroupPage() {
     function OptionButton(props) {
         var isAdmin = false;
         if(auth.user){
-            isAdmin = props.admin == auth.user.uid;
+            isAdmin = props.group.admin == auth.user.uid;
         } 
-        const id = props.id;
         if (isAdmin) {
-            return <Button variant="contained" color="secondary" size="small" onClick={() => confirm('delete', id)}>Delete</Button>;
+            return <Button variant="contained" color="secondary" size="small" onClick={() => confirm('delete', props.group)}>Delete</Button>;
         }
-        return <Button variant="contained" color="secondary" size="small" onClick={() => confirm('leave', id)}>Leave</Button>;
+        return <Button variant="contained" color="secondary" size="small" onClick={() => confirm('leave', props.group)}>Leave</Button>;
     };
 
     function GroupTable() {
@@ -146,7 +153,7 @@ export default function GroupPage() {
                                 </TableCell>
                                 <TableCell align="center">{row.groupTitle}</TableCell>
                                 <TableCell align="center">{convertToDateTime(row.lastUpdated)}</TableCell>
-                                <TableCell align="center"><OptionButton admin={row.admin} id={row.id} /></TableCell>
+                                <TableCell align="center"><OptionButton group={row} /></TableCell>
                                 <TableCell align="center">
                                     <Link to={"/logs/" + row.id} style={{ textDecoration: 'none' }}>
                                         <Button variant="contained" color="primary" size="small">Go</Button>
