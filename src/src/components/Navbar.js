@@ -8,6 +8,8 @@ import green from "@material-ui/core/colors/green";
 import Modal from "@material-ui/core/Modal";
 import TextField from '@material-ui/core/TextField';
 import { useAuth } from "../lib/auth";
+import { createGroup } from '../lib/db'
+
 
 function getModalStyle() {
   return {
@@ -50,6 +52,12 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 12.5,
     opacity: 0.7
   },
+  errorText: {
+    color: 'red',
+    marginTop: `3%`,
+    fontSize: 17,
+    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif" 
+  },
   offset: theme.mixins.toolbar
 }));
 
@@ -63,6 +71,7 @@ export default function Navbar() {
   const [groupName, setGroupName] = useState('');
   const [password, setPassword] = useState('');
   const [groupTitle, setGroupTitle] = useState('');
+  const [errorCreate, setErrorCreate] = useState('');
 
   const handleOpenJoin = () => {
     setOpenJoin(true);
@@ -85,7 +94,23 @@ export default function Navbar() {
   };
 
   const handleSubmitCreate = () => {
-    setOpenCreate(false);
+    if(groupName == ""){
+      setErrorCreate('Group Name is required.')
+    } else if(groupTitle == ""){
+      setErrorCreate('Group Title is required.')
+    } else if(password == ""){
+      setErrorCreate('Password is required.')
+    }
+    else if(auth.user && groupTitle != "" && groupName != "" && password != ""){
+      var results = createGroup(auth.user.uid, groupName, groupTitle, password);
+      results.then( data => {
+        if(data == "taken"){
+          setErrorCreate('Group Name is taken, please try a different one.')
+        } else {
+          window.location.reload();
+        }
+      })
+    }
   };
 
   const signOut = () => {
@@ -156,10 +181,12 @@ export default function Navbar() {
           variant="contained"
           color="primary"
           className={classes.joinButton}
-          type="submit"
+          type="button"
+          onClick={() => handleSubmitCreate()}
         >
           Create Group
             </Button>
+          <div className={classes.errorText}>{errorCreate}</div>
       </form>
       <div className={classes.infoDiv}>Invite people to this group by sending them the 'Group Name' and 'Password'!</div>
     </div>

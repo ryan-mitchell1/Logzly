@@ -74,9 +74,10 @@ export default function GroupPage() {
 
     useEffect(() => {
         if(auth.user){
-            var g = getGroups(auth.user.uid);
-            g.then( data => {
-                setGroupData(data);
+            var results = getGroups(auth.user.uid);
+            results.then( data => {
+                var sortedData = data.sort(function(a, b) {return b.lastUpdated - a.lastUpdated});
+                setGroupData(sortedData);
             })
         }
     }, [])
@@ -98,6 +99,15 @@ export default function GroupPage() {
 
         }
         setShowModal(false);
+    }
+
+    function convertToDateTime(miliSeconds) {
+        var today = new Date(miliSeconds);
+        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        var time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+        var dateTime = date + " " + time;
+    
+        return dateTime;
     }
 
     function OptionButton(props) {
@@ -135,7 +145,7 @@ export default function GroupPage() {
                                     {row.groupName}
                                 </TableCell>
                                 <TableCell align="center">{row.groupTitle}</TableCell>
-                                <TableCell align="center">{row.lastUpdated}</TableCell>
+                                <TableCell align="center">{convertToDateTime(row.lastUpdated)}</TableCell>
                                 <TableCell align="center"><OptionButton admin={row.admin} id={row.id} /></TableCell>
                                 <TableCell align="center">
                                     <Link to={"/logs/" + row.id} style={{ textDecoration: 'none' }}>
