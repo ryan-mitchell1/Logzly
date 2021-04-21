@@ -14,10 +14,11 @@ import { Container } from "@material-ui/core";
 import { useAuth } from "../lib/auth";
 import { Redirect, useParams } from "react-router";
 
-const headerComment = { fontSize: "20px", fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif" };
-const headerDate = { fontSize: "16px", fontWeight: 'normal', float: 'right' };
-const commentStyle = { fontSize: "14px", fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif" };
+const headerComment = { fontSize: "20px", fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif", display:'flex', alignItems:'center' };
+const headerDate = { fontSize: "16px", fontWeight: 'normal', marginLeft:'auto' };
+const commentStyle = { fontSize: "16px", fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif" };
 const containerStyle = { margin: 'auto', width: '75%' };
+const imgStyle = {height: '30px', borderRadius: '100px', marginRight: '2%'}
 
 function convertToDateTime(miliSeconds) {
     var today = new Date(miliSeconds);
@@ -36,10 +37,12 @@ var Comment = createReactClass({
     },
 
     render: function () {
+        console.log(this.props.picture)
         return (
             <div className="comment">
+                
                 <h5 style={headerComment} className="commentAuthor">
-                    {this.props.author} <span style={headerDate}> {convertToDateTime(this.props.created)}</span>
+                    <img style={imgStyle} src={this.props.picture}></img> {this.props.author} <span style={headerDate}> {convertToDateTime(this.props.created)}</span>
                 </h5>
                 <span style={commentStyle} dangerouslySetInnerHTML={this.rawMarkup()} />
             </div>
@@ -52,7 +55,7 @@ var CommentList = createReactClass({
         var commentNodes = this.props.data.map(function (comment) {
             return (
                 <div key={comment.id}>
-                    <Comment author={comment.author} created={comment.created}>
+                    <Comment author={comment.author} created={comment.created} picture={comment.picture}>
                         {comment.text}
                     </Comment>
                     <hr />
@@ -88,7 +91,6 @@ export default function LogPage() {
         } else {
             return (
                 <div style={containerStyle}>
-                    <h3 style={{ fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif" }}>Comments:</h3>
                     <CommentList data={logData} />
                 </div>
             )
