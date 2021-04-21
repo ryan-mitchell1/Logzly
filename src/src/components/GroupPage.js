@@ -63,7 +63,7 @@ export default function GroupPage() {
             <Button
             variant="contained"
             color="secondary"
-            onClick={() => leaveDelete(group, type)}
+            onClick={() => setShowModal(false)}
         >
             Cancel
             </Button>
