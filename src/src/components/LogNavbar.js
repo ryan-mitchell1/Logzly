@@ -9,6 +9,8 @@ import Modal from "@material-ui/core/Modal";
 import { Link, Redirect } from "react-router-dom";
 import TextField from '@material-ui/core/TextField';
 import { useAuth } from "../lib/auth";
+import { useParams } from "react-router";
+import { createLog } from '../lib/db'
 
 function getModalStyle() {
   return {
@@ -52,19 +54,23 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 12.5,
     opacity: 0.7
   },
+  errorText: {
+    color: 'red',
+    marginTop: `3%`,
+    fontSize: 17,
+    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif" 
+  },
   offset: theme.mixins.toolbar
 }));
 
 export default function LogNavbar() {
+  let { groupId } = useParams();
   const auth = useAuth();
   const classes = useStyles();
-  const [example, setExample] = useState("primary");
   const [modalStyle] = React.useState(getModalStyle);
-  const [openJoin, setOpenJoin] = React.useState(false);
   const [openCreate, setOpenCreate] = React.useState(false);
-  const [groupName, setGroupName] = useState('');
-  const [password, setPassword] = useState('');
-  const [groupTitle, setGroupTitle] = useState('');
+  const [logMessage, setLogMessage] = useState('');
+  const [error, setError] = useState('');
 
   const handleOpenCreate = () => {
     setOpenCreate(true);
@@ -75,7 +81,19 @@ export default function LogNavbar() {
   };
 
   const handleSubmitCreate = () => {
-    setOpenCreate(false);
+    if(logMessage == ""){
+      setError('Please make sure to enter a message.')
+    }
+    else if(auth.user && logMessage != ""){
+      var author = auth.user.email;
+      if(auth.user.name){
+        author = auth.user.name;
+      }
+      var results = createLog(auth.user.uid, auth.user.photoUrl, author, logMessage, groupId);
+      results.then( data => {
+        window.location.reload();
+      })
+    }
   };
 
   const signOut = () => {
@@ -90,7 +108,7 @@ export default function LogNavbar() {
           id="log-message"
           label="Log Message"
           variant="outlined"
-          onInput={e => setGroupTitle(e.target.value)}
+          onInput={e => setLogMessage(e.target.value)}
           fullWidth={true}
           multiline={true}
           rowsMax={4}
@@ -99,10 +117,12 @@ export default function LogNavbar() {
           variant="contained"
           color="primary"
           className={classes.joinButton}
-          type="submit"
+          type="button"
+          onClick={() => handleSubmitCreate()}
         >
           Create Log
             </Button>
+            <div className={classes.errorText}>{error}</div>
       </form>
     </div>
   );

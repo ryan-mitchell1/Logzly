@@ -14,6 +14,22 @@ export function createUser(uid, data) {
         .set({ uid, ...data }, { merge: true })
 }
 
+export function createLog(uid, photoUrl, author, logMessage, groupId) {
+    const promise1 = new Promise((resolve, reject) => {
+        firestore.collection('logs').add({
+            "uid": uid,
+            "picture": photoUrl,
+            "groupId": groupId,
+            "text": logMessage,
+            "created": getNow(),
+            "author": author
+        }).then(() => {
+            resolve("created");
+        })
+    })
+    return promise1;
+}
+
 export function createGroup(uid, groupName, groupTitle, password) {
     var groupNameCheck = checkGroupName(groupName);
 
@@ -60,6 +76,24 @@ export async function getGroups(uid) {
     return promise1;
 }
 
+export async function getLogs(groupId) {
+    const logs = await firestore.collection('logs');
+
+    const promise1 = new Promise((resolve, reject) => {
+        logs.get().then((querySnapshot) => {
+            const tempDoc = []
+            querySnapshot.forEach((doc) => {
+                var log = { id: doc.id, ...doc.data() };
+                if (log.groupId == groupId) {
+                    tempDoc.push({ id: doc.id, ...doc.data() });
+                }
+            })
+            resolve(tempDoc)
+        })
+    })
+    return promise1;
+}
+
 export function deleteGroup(groupId) {
     const promise1 = new Promise((resolve, reject) => {
         firestore.collection("groups").doc(groupId).delete().then(() => {
@@ -69,7 +103,7 @@ export function deleteGroup(groupId) {
     return promise1;
 }
 
-export function leaveGroup(uid, group){
+export function leaveGroup(uid, group) {
     const promise1 = new Promise((resolve, reject) => {
         const newMemeberList = group.groupMembers.filter(function (elem) { return elem !== uid; });
         group.groupMembers = newMemeberList;
