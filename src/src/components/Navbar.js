@@ -9,6 +9,7 @@ import Modal from "@material-ui/core/Modal";
 import TextField from '@material-ui/core/TextField';
 import { useAuth } from "../lib/auth";
 import { createGroup, joinGroup } from '../lib/db'
+import { Avatar } from "@material-ui/core";
 
 
 function getModalStyle() {
@@ -56,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     color: 'red',
     marginTop: `3%`,
     fontSize: 17,
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif" 
+    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif"
   },
   offset: theme.mixins.toolbar
 }));
@@ -83,23 +84,23 @@ export default function Navbar() {
   };
 
   const handleSubmitJoin = () => {
-    if(groupName == ""){
+    if (groupName == "") {
       setErrorJoin('Group Name is required.')
-    } else if(password == ""){
+    } else if (password == "") {
       setErrorJoin('Password is required.')
-    } else if(auth.user && password != "" && groupName != ""){
+    } else if (auth.user && password != "" && groupName != "") {
       var results = joinGroup(auth.user.uid, groupName, password);
-      results.then( data => {
-        if(data == "wrong password"){
+      results.then(data => {
+        if (data == "wrong password") {
           setErrorJoin('Password is incorrect.')
-        } 
-        if(data == "does not exist"){
+        }
+        if (data == "does not exist") {
           setErrorJoin('This group does not exist.')
         }
-        if(data == "already member"){
+        if (data == "already member") {
           setErrorJoin('You are already a member of this group.')
         }
-        if(data == "joined"){
+        if (data == "joined") {
           window.location.reload();
         }
       })
@@ -115,17 +116,17 @@ export default function Navbar() {
   };
 
   const handleSubmitCreate = () => {
-    if(groupName == ""){
+    if (groupName == "") {
       setErrorCreate('Group Name is required.')
-    } else if(groupTitle == ""){
+    } else if (groupTitle == "") {
       setErrorCreate('Group Title is required.')
-    } else if(password == ""){
+    } else if (password == "") {
       setErrorCreate('Password is required.')
     }
-    else if(auth.user && groupTitle != "" && groupName != "" && password != ""){
+    else if (auth.user && groupTitle != "" && groupName != "" && password != "") {
       var results = createGroup(auth.user.uid, groupName, groupTitle, password);
-      results.then( data => {
-        if(data == "taken"){
+      results.then(data => {
+        if (data == "taken") {
           setErrorCreate('Group Name is taken, please try a different one.')
         } else {
           window.location.reload();
@@ -167,7 +168,7 @@ export default function Navbar() {
         >
           Join Group
             </Button>
-            <div className={classes.errorText}>{errorJoin}</div>
+        <div className={classes.errorText}>{errorJoin}</div>
       </form>
     </div>
   );
@@ -209,7 +210,7 @@ export default function Navbar() {
         >
           Create Group
             </Button>
-          <div className={classes.errorText}>{errorCreate}</div>
+        <div className={classes.errorText}>{errorCreate}</div>
       </form>
       <div className={classes.infoDiv}>Invite people to this group by sending them the 'Group Name' and 'Password'!</div>
     </div>
@@ -233,6 +234,7 @@ export default function Navbar() {
           <Button color="inherit" className={classes.button} onClick={signOut}>
             Sign Out
           </Button>
+          <Avatar src={auth.user.photoUrl} />
         </Toolbar>
         <Modal
           open={openJoin}

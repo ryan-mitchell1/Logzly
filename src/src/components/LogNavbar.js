@@ -11,6 +11,7 @@ import TextField from '@material-ui/core/TextField';
 import { useAuth } from "../lib/auth";
 import { useParams } from "react-router";
 import { createLog } from '../lib/db'
+import { Avatar } from "@material-ui/core";
 
 function getModalStyle() {
   return {
@@ -58,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
     color: 'red',
     marginTop: `3%`,
     fontSize: 17,
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif" 
+    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif"
   },
   offset: theme.mixins.toolbar
 }));
@@ -81,16 +82,16 @@ export default function LogNavbar() {
   };
 
   const handleSubmitCreate = () => {
-    if(logMessage == ""){
+    if (logMessage == "") {
       setError('Please make sure to enter a message.')
     }
-    else if(auth.user && logMessage != ""){
+    else if (auth.user && logMessage != "") {
       var author = auth.user.email;
-      if(auth.user.name){
+      if (auth.user.name) {
         author = auth.user.name;
       }
       var results = createLog(auth.user.uid, auth.user.photoUrl, author, logMessage, groupId);
-      results.then( data => {
+      results.then(data => {
         window.location.reload();
       })
     }
@@ -122,7 +123,7 @@ export default function LogNavbar() {
         >
           Create Log
             </Button>
-            <div className={classes.errorText}>{error}</div>
+        <div className={classes.errorText}>{error}</div>
       </form>
     </div>
   );
@@ -147,6 +148,7 @@ export default function LogNavbar() {
           <Button color="inherit" className={classes.button} onClick={signOut}>
             Sign Out
           </Button>
+          <Avatar src={auth.user.photoUrl} />
         </Toolbar>
         <Modal
           open={openCreate}
