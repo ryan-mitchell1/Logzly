@@ -63,7 +63,7 @@ export default function GroupPage() {
             <Button
             variant="contained"
             color="secondary"
-            onClick={() => leaveDelete(group, type)}
+            onClick={() => setShowModal(false)}
         >
             Cancel
             </Button>
@@ -156,7 +156,7 @@ export default function GroupPage() {
                                 <TableCell align="center"><OptionButton group={row} /></TableCell>
                                 <TableCell align="center">
                                     <Link to={"/logs/" + row.id} style={{ textDecoration: 'none' }}>
-                                        <Button variant="contained" color="primary" size="small">Go</Button>
+                                        <Button variant="contained" color="primary" size="small">View</Button>
                                     </Link>
 
                                 </TableCell>

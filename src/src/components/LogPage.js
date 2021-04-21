@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import LogNavbar from './LogNavbar';
 import { Remarkable } from 'remarkable';
 import createReactClass from 'create-react-class';
+import { getLogs } from '../lib/db'
 
 import {
     BrowserRouter as Router,
@@ -13,10 +14,21 @@ import { Container } from "@material-ui/core";
 import { useAuth } from "../lib/auth";
 import { Redirect, useParams } from "react-router";
 
-const headerComment = { fontSize: "20px", fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif" };
-const headerDate = { fontSize: "16px", fontWeight: 'normal', float: 'right' };
-const commentStyle = { fontSize: "14px", fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif" };
+const headerComment = { fontSize: "20px", fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif", display:'flex', alignItems:'center' };
+const headerDate = { fontSize: "16px", fontWeight: 'normal', marginLeft:'auto' };
+const commentStyle = { fontSize: "16px", fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif" };
 const containerStyle = { margin: 'auto', width: '75%' };
+const imgStyle = {height: '30px', borderRadius: '100px', marginRight: '2%'}
+
+function convertToDateTime(miliSeconds) {
+    var today = new Date(miliSeconds);
+    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    var time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+    var dateTime = date + " " + time;
+
+    return dateTime;
+}
+
 var Comment = createReactClass({
     rawMarkup: function () {
         var md = new Remarkable();
@@ -26,9 +38,9 @@ var Comment = createReactClass({
 
     render: function () {
         return (
-            <div className="comment">
+            <div className="comment">      
                 <h5 style={headerComment} className="commentAuthor">
-                    {this.props.author} <span style={headerDate}> {this.props.created}</span>
+                    <img style={imgStyle} src={this.props.picture}></img> {this.props.author} <span style={headerDate}> {convertToDateTime(this.props.created)}</span>
                 </h5>
                 <span style={commentStyle} dangerouslySetInnerHTML={this.rawMarkup()} />
             </div>
@@ -40,8 +52,8 @@ var CommentList = createReactClass({
     render: function () {
         var commentNodes = this.props.data.map(function (comment) {
             return (
-                <div key={comment.logId}>
-                    <Comment author={comment.author} created={comment.created}>
+                <div key={comment.id}>
+                    <Comment author={comment.author} created={comment.created} picture={comment.picture}>
                         {comment.text}
                     </Comment>
                     <hr />
@@ -57,36 +69,42 @@ var CommentList = createReactClass({
 });
 
 export default function LogPage() {
-    var log_data = [
-        {
-            "logId": 1,
-            "groupId": 1,
-            "created": "03-31-2020 14:26:45",
-            "author": "Ryan Mitchell",
-            "uid": "jFxgv779ZQd0b3lPf08jqm8WKzH3",
-            "text": "Wow great app!"
-        },
-        {
-            "logId": 2,
-            "groupId": 1,
-            "created": "04-02-2020 15:31:45",
-            "author": "Nikesh Parajuli",
-            "uid": "jFxgv779ZQd0b3lPf08jqm8WKzH3",
-            "text": "Awesome app!"
-        }
-    ];
+    const auth = useAuth();
+    const [logData, setLogData] = useState([]);
 
     let { groupId } = useParams();
 
-    const auth = useAuth();
+    useEffect(() => {
+        if (groupId) {
+            var results = getLogs(groupId, auth.user.uid);
+            results.then(data => {
+                if(data == "not available"){
+                    window.location.href = "/not-found";
+                } else {
+                    var sortedData = data.sort(function (a, b) { return b.created - a.created });
+                    setLogData(sortedData);
+                }
+            })
+        }
+    }, [])
+
+    function LogTable() {
+        if (logData.length == 0) {
+            return <h2 style={{ textAlign: "center", fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif" }}>This group has no logs. Create a log to get started!</h2>
+        } else {
+            return (
+                <div style={containerStyle}>
+                    <CommentList data={logData} />
+                </div>
+            )
+        }
+    }
+
     return auth.user ? (
         <div>
             <LogNavbar />
         &nbsp;
-            <div style={containerStyle}>
-                <h3 style={{ fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif" }}>Comments:</h3>
-                <CommentList data={log_data} />
-            </div>
+            <LogTable />
         </div>
     ) : (
         <Redirect to="/login" />
