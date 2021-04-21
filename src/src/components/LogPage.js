@@ -37,10 +37,8 @@ var Comment = createReactClass({
     },
 
     render: function () {
-        console.log(this.props.picture)
         return (
-            <div className="comment">
-                
+            <div className="comment">      
                 <h5 style={headerComment} className="commentAuthor">
                     <img style={imgStyle} src={this.props.picture}></img> {this.props.author} <span style={headerDate}> {convertToDateTime(this.props.created)}</span>
                 </h5>
@@ -71,16 +69,21 @@ var CommentList = createReactClass({
 });
 
 export default function LogPage() {
+    const auth = useAuth();
     const [logData, setLogData] = useState([]);
 
     let { groupId } = useParams();
 
     useEffect(() => {
         if (groupId) {
-            var results = getLogs(groupId);
+            var results = getLogs(groupId, auth.user.uid);
             results.then(data => {
-                var sortedData = data.sort(function (a, b) { return b.created - a.created });
-                setLogData(sortedData);
+                if(data == "not available"){
+                    window.location.href = "/not-found";
+                } else {
+                    var sortedData = data.sort(function (a, b) { return b.created - a.created });
+                    setLogData(sortedData);
+                }
             })
         }
     }, [])
@@ -97,7 +100,6 @@ export default function LogPage() {
         }
     }
 
-    const auth = useAuth();
     return auth.user ? (
         <div>
             <LogNavbar />

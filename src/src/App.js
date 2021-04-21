@@ -5,6 +5,7 @@ import HomePage from './components/HomePage';
 import LogPage from './components/LogPage';
 import { useAuth } from "./lib/auth";
 import LoginPage from "./components/LoginPage";
+import NotFoundPage from "./components/NotFoundPage";
 
 export default function App() {
   const auth = useAuth();
@@ -22,6 +23,9 @@ export default function App() {
         </Route>
         <Route path="/login">
           <LoginPage />
+        </Route>
+        <Route path="/not-found">
+          <NotFoundPage />
         </Route>
         <Route path="/">
           <HomePage />

@@ -76,20 +76,32 @@ export async function getGroups(uid) {
     return promise1;
 }
 
-export async function getLogs(groupId) {
+export async function getLogs(groupId, uid) {
     const logs = await firestore.collection('logs');
-
     const promise1 = new Promise((resolve, reject) => {
-        logs.get().then((querySnapshot) => {
-            const tempDoc = []
-            querySnapshot.forEach((doc) => {
-                var log = { id: doc.id, ...doc.data() };
-                if (log.groupId == groupId) {
-                    tempDoc.push({ id: doc.id, ...doc.data() });
+        checkGroupId(groupId).then((data) => {
+            if (data != false) {
+                if (data.groupMembers.indexOf(uid) <= -1) {
+                    resolve("not available");
                 }
-            })
-            resolve(tempDoc)
+                else {
+                    logs.get().then((querySnapshot) => {
+                        const tempDoc = []
+                        querySnapshot.forEach((doc) => {
+                            var log = { id: doc.id, ...doc.data() };
+                            if (log.groupId == groupId) {
+                                tempDoc.push({ id: doc.id, ...doc.data() });
+                            }
+                        })
+                        resolve(tempDoc)
+                    })
+                }
+
+            } else {
+                resolve("not available");
+            }
         })
+
     })
     return promise1;
 }
@@ -160,6 +172,24 @@ async function checkGroupName(groupName) {
                 }
             })
             resolve(false); //group with groupName does not exist
+        })
+    })
+    return promise1;
+}
+
+async function checkGroupId(groupId) {
+    const groups = await firestore.collection('groups');
+
+    const promise1 = new Promise((resolve, reject) => {
+        groups.get().then((querySnapshot) => {
+            const tempDoc = []
+            querySnapshot.forEach((doc) => {
+                var group = { id: doc.id, ...doc.data() };
+                if (group.id == groupId) {
+                    resolve(group); //group with groupId does exist
+                }
+            })
+            resolve(false); //group with groupId does not exist
         })
     })
     return promise1;
