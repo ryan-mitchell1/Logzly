@@ -16,15 +16,18 @@ export function createUser(uid, data) {
 
 export function createLog(uid, photoUrl, author, logMessage, groupId) {
     const promise1 = new Promise((resolve, reject) => {
-        firestore.collection('logs').add({
-            "uid": uid,
-            "picture": photoUrl,
-            "groupId": groupId,
-            "text": logMessage,
-            "created": getNow(),
-            "author": author
-        }).then(() => {
-            resolve("created");
+        var result = updateGroup(groupId);
+        result.then(() => {
+            firestore.collection('logs').add({
+                "uid": uid,
+                "picture": photoUrl,
+                "groupId": groupId,
+                "text": logMessage,
+                "created": getNow(),
+                "author": author
+            }).then(() => {
+                resolve("created");
+            })
         })
     })
     return promise1;
@@ -172,6 +175,19 @@ async function checkGroupName(groupName) {
                 }
             })
             resolve(false); //group with groupName does not exist
+        })
+    })
+    return promise1;
+}
+
+function updateGroup(groupId) {
+    const getGroup = checkGroupId(groupId);
+    const promise1 = new Promise((resolve, reject) => {
+        getGroup.then((group) => {
+            group.lastUpdated = getNow();
+            firestore.collection('groups').doc(group.id).update(group).then(() => {
+                resolve("updated");
+            });
         })
     })
     return promise1;
