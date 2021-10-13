@@ -27,32 +27,5 @@ Each journal entry will be time stamped for the team manager to see when the dev
 ### Sample Use Case
 A sample use case for this application is this project. Every week we must submit a journal entry to the Github repository. But this system is not the easiest process for the student or the teacher because the professor must dig through all the repositories in order to view the entries. So this application will provide an easy way for team members and the professor to view journal entries. And it will provide a better way to add entries instead of having to commit to the repository.
 
-## Feedback from Shane
-
-HA!! What a great project :) I could really use something like this. I can see so many applications outside of software development or the academic environment. For example, I can see this as a great way to do yearly employee evaluations. The employee would use this app during the year and the evaluation would be the employee and manager sitting down and reviewing the journal entries.  
-
-I am excited to see the finished project and with your teams permission use it in my classes!
-
-
-## Tech lab
-
-For this project, we discussed that we will need both a frontend and backend, and with this will need both backend and frontend languages and frameworks. To start we discussed frontend frameworks and we quickly decided that we wanted to stick with one of the main three; Vue.js, Angular.js, and React.js. This is because these three frameworks have the most support and documentation available.  From these three we decided to go with React. This is because our combined experience with React outweighs either of the other two and we all still want to learn more about it. In addition, after some research, we found React to be very fast, scalable, and somewhat simple to use/learn. React and Angular also have some of the highest value right now in the job market, and in recent years React and Vue have been competing for the most popular framework.
-
-Then we discussed backend frameworks and decided to go with nodeJS because we wanted to choose an all-javascript solution using the same package manager. Our research also concluded that nodeJS is fast because it uses the V8 engine developed for chrome which compiles javascript code into native machine code directly, thus increasing the speed and efficient execution of the code. Once decided on nodeJS we had to start looking into web frameworks for nodeJS and we decided on Express. We decided to use Express because it was easy to configure and customize. Using express would allow us to conveniently serve static files and resources from our application. 
-
-Lastly, we also discussed a little bit about what databases we should use. Our first consideration was Firebase because we are considering using this for our authentication as well through GitHub. We also are considering a SQL database such as MySQL or PostgreSQL. We are still weighing the pros and cons of both of these options and are intending to have the decision made when we start developing our project.
-
-## CI lab
-
-To start with setting up the continuous integration of our application we clicked on the actions tab at the top of the GitHub page of our repo. From here we were able to click on the example [Node.js workflow](https://docs.github.com/en/actions/guides/building-and-testing-nodejs) and make our changes in there. We changed this file to run the action on each push, delete the default run commands, and added our own run commands that executed our test.sh and build.sh scripts. In addition, we added names before running each of these files in order to precisely log what is happening. After completing these steps we had our action set up to build and test our project on every commit. Lastly, to get the [status badge](https://docs.github.com/en/actions/managing-workflow-runs/adding-a-workflow-status-badge) to appear in our README, we just had to add a link to the status badge in our README.
-
-This CI pipeline currently uses an Ubuntu test runner to test our project against Node.js versions 10.x, 12.x, 14.x, and 15.x.
-
-## Planning Lab
-
-- [Ryan's Plan](./planning/ryanmitchell9@u.boisestate.edu.md)
-- [Nikesh's Plan](./planning/nikeshparajuli@u.boisestate.edu.md)
-- [Antonio's Plan](./planning/antoniotelleria@u.boisestate.edu.md)
-
 ## Sponsors
 [![powered-by-vercel](https://user-images.githubusercontent.com/47830777/112386760-fa86b200-8cb6-11eb-950e-721436bc9031.png)](https://vercel.com/?utm_source=logzly&utm_campaign=oss)
